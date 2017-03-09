@@ -45,9 +45,7 @@ public class MainActivity extends AppCompatActivity implements RecipeFragment.On
     @Override
     public void onListFragmentInteraction(Recipe item, int position) {
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.listFrameLayout,DetailFragment.newInstance(position));
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        FragmentTransaction fragmentTransaction = null;
+        if (null == fragmentTransaction) throw new AssertionError("Create new fragment after click on recipe");
     }
 }
