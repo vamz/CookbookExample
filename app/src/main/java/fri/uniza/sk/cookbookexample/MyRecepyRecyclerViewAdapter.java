@@ -34,7 +34,7 @@ public class MyRecepyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecepyRe
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = recipes.get(position);
 
         holder.mImageView.setImageBitmap(recipes.get(position).getBitmapFromAsset(context));
@@ -46,7 +46,7 @@ public class MyRecepyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecepyRe
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(holder.mItem,position);
                 }
             }
         });

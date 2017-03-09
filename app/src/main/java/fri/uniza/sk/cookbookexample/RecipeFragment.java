@@ -88,6 +88,6 @@ public class RecipeFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Recipe item);
+        void onListFragmentInteraction(Recipe item, int position);
     }
 }

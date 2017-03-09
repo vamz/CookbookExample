@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,12 +37,17 @@ public class MainActivity extends AppCompatActivity implements RecipeFragment.On
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.listFrameLayout,RecipeFragment.newInstance());
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
     }
 
     @Override
-    public void onListFragmentInteraction(Recipe item) {
-        Toast.makeText(this,item.title,Toast.LENGTH_SHORT).show();
+    public void onListFragmentInteraction(Recipe item, int position) {
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.listFrameLayout,DetailFragment.newInstance(position));
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }
