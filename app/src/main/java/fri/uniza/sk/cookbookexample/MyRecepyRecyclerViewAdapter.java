@@ -35,10 +35,7 @@ public class MyRecepyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecepyRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = recipes.get(position);
-
-        holder.mImageView.setImageBitmap(recipes.get(position).getBitmapFromAsset(context));
-        holder.mContentView.setText(recipes.get(position).title);
+       //TODO BIND DATA
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +43,8 @@ public class MyRecepyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecepyRe
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    if (holder.recipe==null) throw new AssertionError("Initialize variables in holder");
+                    mListener.onListFragmentInteraction(holder.recipe);
                 }
             }
         });
@@ -58,21 +56,12 @@ public class MyRecepyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecepyRe
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final ImageView mImageView;
-        public final TextView mContentView;
-        public Recipe mItem;
+        Recipe recipe;
+        //TODO IMPLEMNT VIEWHOLDER
 
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mImageView = (ImageView) view.findViewById(R.id.smallImage);
-            mContentView = (TextView) view.findViewById(R.id.content);
+        public ViewHolder(View itemView) {
+            super(itemView);
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
     }
 }

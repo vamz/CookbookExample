@@ -34,11 +34,8 @@ public class MainActivity extends AppCompatActivity implements RecipeFragment.On
             Log.e("CookBook","Data read error");
         }
 
-//        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.listFrameLayout);
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.listFrameLayout,RecipeFragment.newInstance());
-        fragmentTransaction.commit();
+        FragmentTransaction fragmentTransaction = null;
+        if (fragmentTransaction==null) throw new AssertionError("Add fragment");
 
     }
 

@@ -52,8 +52,8 @@ public class RecipeFragment extends Fragment {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new MyRecepyRecyclerViewAdapter(Singleton.getInstance().getRecipes(), mListener));
 
+            if (recyclerView.getAdapter()==null) throw new AssertionError("Add apropriet adapter");
         }
         return view;
     }
