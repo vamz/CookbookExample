@@ -56,11 +56,15 @@ public class MyRecepyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecepyRe
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        Recipe recipe;
-        //TODO IMPLEMNT VIEWHOLDER
+        public final View mView;
+        public final ImageView mImageView;
+        public final TextView mContentView;
+        public Recipe mItem;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
+            //TODO IMPLEMNT VIEWHOLDER
         }
 
     }
