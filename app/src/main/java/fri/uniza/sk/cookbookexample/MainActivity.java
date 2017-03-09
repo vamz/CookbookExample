@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +15,8 @@ import fri.uniza.sk.cookbookexample.model.Singleton;
 import fri.uniza.sk.cookbookexample.utilities.LoadData;
 
 public class MainActivity extends AppCompatActivity implements RecipeFragment.OnListFragmentInteractionListener {
+
+    private View detailFragmentContainer=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +33,14 @@ public class MainActivity extends AppCompatActivity implements RecipeFragment.On
 
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("CookBook","Data read error");
+            Log.e("CookBook", "Data read error");
         }
 
-//        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.listFrameLayout);
+        detailFragmentContainer = findViewById(R.id.detailFragment);
+
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.listFrameLayout,RecipeFragment.newInstance());
+        fragmentTransaction.replace(R.id.listFrameLayout, RecipeFragment.newInstance());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
@@ -44,10 +48,16 @@ public class MainActivity extends AppCompatActivity implements RecipeFragment.On
 
     @Override
     public void onListFragmentInteraction(Recipe item, int position) {
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.listFrameLayout,DetailFragment.newInstance(position));
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        if (detailFragmentContainer==null) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.listFrameLayout, DetailFragment.newInstance(position));
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }else {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.detailFragment, DetailFragment.newInstance(position));
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 }
