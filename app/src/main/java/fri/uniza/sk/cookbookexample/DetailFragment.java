@@ -53,7 +53,7 @@ public class DetailFragment extends Fragment {
         listView.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,Singleton.getInstance().getRecipes().get(position).ingredients));
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = Singleton.getInstance().getRecipes().size()*300;
+        params.height = Singleton.getInstance().getRecipes().get(position).ingredients.size()*100;
 
         listView.setLayoutParams(params);
         listView.requestLayout();
