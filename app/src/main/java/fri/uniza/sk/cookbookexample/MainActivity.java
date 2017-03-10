@@ -1,6 +1,8 @@
 package fri.uniza.sk.cookbookexample;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,7 +18,9 @@ import fri.uniza.sk.cookbookexample.utilities.LoadData;
 
 public class MainActivity extends AppCompatActivity implements RecipeFragment.OnListFragmentInteractionListener {
 
-    private View detailFragmentContainer=null;
+    private View detailFragmentContainer = null;
+    private DetailFragment detailFragmentl = null;
+    private int curentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +45,49 @@ public class MainActivity extends AppCompatActivity implements RecipeFragment.On
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.listFrameLayout, RecipeFragment.newInstance());
-        fragmentTransaction.addToBackStack(null);
+        //fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
+        Fragment detailFragment = getSupportFragmentManager().findFragmentByTag("detailFragment");
+        if (savedInstanceState != null && (detailFragmentContainer != null || detailFragment != null)) {
+            //
+            getSupportFragmentManager().popBackStack("detailFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            int position = savedInstanceState.getInt("detailPosition");
+            createFragment(position);
+        }
 
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("detailPosition", curentPosition);
+    }
+
+    @Override
     public void onListFragmentInteraction(Recipe item, int position) {
-        if (detailFragmentContainer==null) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.listFrameLayout, DetailFragment.newInstance(position));
-            fragmentTransaction.addToBackStack(null);
+
+        createFragment(position);
+
+
+    }
+
+    private void createFragment(int position) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        DetailFragment detailFragment = DetailFragment.newInstance(position);
+        curentPosition = position;
+        if (detailFragmentContainer == null) {
+
+            fragmentTransaction.replace(R.id.listFrameLayout, detailFragment, "detailFragment");
+            fragmentTransaction.addToBackStack("detailFragment");
             fragmentTransaction.commit();
-        }else {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.detailFragment, DetailFragment.newInstance(position));
-            fragmentTransaction.addToBackStack(null);
+
+        } else {
+
+            fragmentTransaction.replace(R.id.detailFragment, detailFragment, "detailFragment");
+            //fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
+
     }
 }
